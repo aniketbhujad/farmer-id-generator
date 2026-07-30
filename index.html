@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer ID Card Generator - Secure Eco Green Card Creator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons for premium iconography -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- jsPDF for A4/4x6 high-resolution PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- QRious.js for generating secure high-capacity QR codes -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Bilingual Consent Modal Overlay -->
+    <div id="consentModal" class="modal-overlay active">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-header-icon"><i data-lucide="alert-triangle"></i></span>
+                <span class="modal-header-title">महत्त्वपूर्ण चेतावणी! / Warning!</span>
+            </div>
+            <div class="modal-body">
+                <h3 class="warning-subtitle">हे शासकीय पोर्टल नाही / This is NOT a Government Portal</h3>
+
+                <div class="modal-sections">
+                    <!-- Marathi Section -->
+                    <div class="lang-section marathi">
+                        <div class="lang-section-title">मराठी</div>
+                        <div class="warning-box">
+                            <div class="warning-box-title">दुकानदार/सेवा प्रदात्यांसाठी सूचना:</div>
+                            <p style="font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: #78350f;">
+                                जर तुम्ही या प्रिंटिंग पोर्टलद्वारे शेतकऱ्यांना कार्ड पुरवत असाल तर:
+                            </p>
+                            <ul>
+                                <li>शेतकऱ्यांना <strong style="color: var(--danger);">स्पष्टपणे</strong> सांगा की हे
+                                    अधिकृत शासकीय कार्ड नाही</li>
+                                <li>हे कार्ड फक्त शेतकरी ID संग्रहित ठेवण्यासाठी आहे</li>
+                                <li>शेतकऱ्यांना ही बाब समजल्यानंतरच आणि त्यांना तरीही कार्ड हवे असेल तरच द्या</li>
+                                <li>भविष्यात शासन अधिकृत कार्ड देऊ शकते</li>
+                            </ul>
+                        </div>
+
+                        <div class="danger-box">
+                            <i data-lucide="info"></i>
+                            <p><strong>सावधान:</strong> शासनाने अधिकृत कार्ड दिल्यास तुमचे दिलेले कार्ड अवैध ठरेल. योग्य
+                                माहिती न दिल्यास शेतकरी तुमच्यावर कायदेशीर कारवाई करू शकतात.</p>
+                        </div>
+
+                        <div class="info-box">
+                            <h5>शेतकरी बांधवांसाठी:</h5>
+                            <p>हे अनधिकृत कार्ड आहे. केवळ माहिती संग्रहासाठी वापरा.</p>
+                        </div>
+                    </div>
+
+                    <!-- English Section -->
+                    <div class="lang-section english">
+                        <div class="lang-section-title">English</div>
+                        <div class="warning-box">
+                            <div class="warning-box-title">Notice for Shopkeepers/Service Providers:</div>
+                            <p style="font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: #78350f;">
+                                If you are providing cards to farmers through this printing portal:
+                            </p>
+                            <ul>
+                                <li>Tell farmers <strong style="color: var(--danger);">clearly</strong> that this is not
+                                    an official government card.</li>
+                                <li>This card is only for storing and organizing farmer ID information.</li>
+                                <li>Provide this card only after the farmer understands this and still requests it.</li>
+                                <li>The government may issue official cards in the future.</li>
+                            </ul>
+                        </div>
+
+                        <div class="danger-box">
+                            <i data-lucide="info"></i>
+                            <p><strong>CAUTION:</strong> If the government issues an official card, this card will
+                                become invalid. Providing incorrect details may lead to legal actions by farmers.</p>
+                        </div>
+
+                        <div class="info-box" style="background: #f0fdf4; border-color: #bbf7d0;">
+                            <h5 style="color: #166534;">For Farmers:</h5>
+                            <p style="color: #15803d;">This is an unofficial card. Use only for information
+                                storage/reference.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <label class="accept-checkbox-wrapper" for="acceptCheckbox">
+                    <input type="checkbox" id="acceptCheckbox" class="accept-checkbox">
+                    <span class="accept-label">
+                        मला वरील सर्व बाबी समजल्या आहेत / I have understood all the above points
+                    </span>
+                </label>
+                <div class="modal-actions">
+                    <button id="btnDisagree" class="btn btn-disagree"><i data-lucide="x-circle"></i> मला मान्य नाही /
+                        Disagree</button>
+                    <button id="btnAgree" class="btn btn-agree" disabled><i data-lucide="check-circle-2"></i> मी समजून
+                        घेतले आहे / Agree</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Processing Overlay -->
+    <div id="paymentOverlay" class="payment-overlay">
+        <div class="payment-card">
+            <div id="paymentSpinner" class="spinner"></div>
+            <div id="paymentSuccess" class="success-icon">
+                <i data-lucide="check"></i>
+            </div>
+            <h3 id="paymentTitle" class="payment-status-title">Processing Payment...</h3>
+            <p id="paymentDesc" class="payment-status-desc">Generating secure high-resolution card files</p>
+        </div>
+    </div>
+
+    <!-- Photo Adjust (Crop) Modal -->
+    <div id="cropModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 480px; border-top: 5px solid #22c55e;">
+            <div class="modal-header" style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 1.25rem;">
+                <span class="modal-header-icon"
+                    style="color: #22c55e; font-size: 1.5rem; display: flex; align-items: center;"><i
+                        data-lucide="crop"></i></span>
+                <span class="modal-header-title"
+                    style="color: var(--text-main); font-size: 1.35rem; font-weight: 800;">Adjust Your Photo</span>
+            </div>
+            <div class="modal-body"
+                style="padding: 1.5rem; display: flex; flex-direction: column; align-items: center; background: #fafafa; max-height: 75vh;">
+
+                <!-- Crop Container with interactive dragging -->
+                <div id="cropContainer"
+                    style="position: relative; width: 350px; height: 350px; background: #e2e8f0; border: 2px dashed #cbd5e1; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: move; box-shadow: inset 0 2px 8px rgba(0,0,0,0.06);">
+                    <canvas id="cropCanvas" width="350" height="350" style="display: block;"></canvas>
+
+                    <!-- Crop frame (matching the 330x390 aspect ratio on standard cards) -->
+                    <div id="cropTargetFrame"
+                        style="position: absolute; width: 180px; height: 213px; border: 2px solid #22c55e; box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.65); pointer-events: none; border-radius: 4px;">
+                    </div>
+                </div>
+
+                <!-- Zoom Controls -->
+                <div
+                    style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 1.5rem; gap: 12px;">
+                    <button type="button" class="btn" id="btnCropZoomOut"
+                        style="background: white; border: 1.5px solid #22c55e; color: #16a34a; padding: 8px 14px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.9rem; cursor: pointer; flex-shrink: 0; box-shadow: var(--shadow-sm);">
+                        — Zoom Out
+                    </button>
+                    <input type="range" id="cropZoomRange" min="0.1" max="3.0" step="0.01" value="1.0"
+                        style="flex: 1; accent-color: #22c55e; height: 6px; cursor: pointer;">
+                    <button type="button" class="btn" id="btnCropZoomIn"
+                        style="background: white; border: 1.5px solid #22c55e; color: #16a34a; padding: 8px 14px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.9rem; cursor: pointer; flex-shrink: 0; box-shadow: var(--shadow-sm);">
+                        + Zoom In
+                    </button>
+                </div>
+
+                <span
+                    style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1.25rem; font-weight: 500; text-align: center; display: flex; align-items: center; gap: 4px;">
+                    <i data-lucide="info" style="width: 14px; height: 14px; color: #16a34a;"></i> Drag the image to
+                    position it within the frame
+                </span>
+            </div>
+            <div class="modal-footer"
+                style="background: #ffffff; border-top: 1px solid #e2e8f0; padding: 1.25rem; display: flex; justify-content: flex-end; gap: 12px;">
+                <button type="button" class="btn" id="btnCropCancel"
+                    style="background: white; border: 1.5px solid #cbd5e1; color: var(--text-muted); font-weight: 600; padding: 10px 20px; font-size: 0.9rem; border-radius: var(--radius-sm);">Cancel</button>
+                <button type="button" class="btn" id="btnCropSave"
+                    style="background: #22c55e; color: white; font-weight: 700; padding: 10px 22px; font-size: 0.9rem; border-radius: var(--radius-sm); box-shadow: 0 4px 10px rgba(34, 197, 94, 0.25);">Save
+                    Photo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden div for QR Code generation (QRCode.js requires a DOM element) -->
+    <div id="hiddenQrContainer" style="display: none;"></div>
+
+    <!-- Main Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <div class="nav-brand-logo"><i data-lucide="sprout"></i></div>
+            <div class="nav-brand-text">FARMER ID CARD</div>
+            <div class="nav-brand-tag">v1.0 by Farmer Card</div>
+        </div>
+        <div class="nav-controls">
+            <select class="select-control" id="templateSelector">
+                <option value="template1">Template - 1 (Eco Green)</option>
+            </select>
+            <select class="select-control" id="langSelector">
+                <option value="mr">Marathi (मराठी)</option>
+                <option value="hi">Hindi (हिन्दी)</option>
+                <option value="en">English (Eng)</option>
+            </select>
+            <button class="btn-nav-back" id="btnBackHome">
+                <i data-lucide="home"></i> Back to Home
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container">
+        <div class="dashboard-layout">
+
+            <!-- Left Side: Form Details Input -->
+            <section class="panel">
+                <div class="panel-header">
+                    <h2 class="panel-title"><i data-lucide="file-edit"></i> Fill Farmer Details</h2>
+                    <span class="nav-brand-tag" style="background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe;">
+                        <i data-lucide="shield-check"
+                            style="width: 14px; height: 14px; vertical-align: middle; margin-right: 4px; display: inline-block;"></i>SECURE
+                        SANDBOX
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <form id="farmerForm" onsubmit="event.preventDefault();">
+
+                        <div class="form-grid">
+                            <!-- Name in English -->
+                            <div class="form-group">
+                                <label class="form-label" for="nameEng">Name Eng <span class="required">*</span></label>
+                                <input type="text" id="nameEng" class="form-control" placeholder="Farmer name" required>
+                            </div>
+
+                            <!-- Name Local -->
+                            <div class="form-group">
+                                <label class="form-label" for="nameLocal">Name Local</label>
+                                <input type="text" id="nameLocal" class="form-control" placeholder="शेतकऱ्याचे नाव">
+                            </div>
+
+                            <!-- DOB -->
+                            <div class="form-group">
+                                <label class="form-label" for="dob">DOB <span class="required">*</span></label>
+                                <input type="text" id="dob" class="form-control" placeholder="DD/MM/YYYY" required>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="form-group">
+                                <label class="form-label" for="gender">Gender</label>
+                                <select id="gender" class="form-control">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <!-- Mobile -->
+                            <div class="form-group">
+                                <label class="form-label" for="mobile">Mobile <span class="required">*</span></label>
+                                <input type="tel" id="mobile" class="form-control" placeholder="1234567890"
+                                    pattern="\d{10}" maxlength="10" minlength="10"
+                                    title="Mobile number must be exactly 10 digits" required>
+                            </div>
+
+                            <!-- Aadhaar -->
+                            <div class="form-group">
+                                <label class="form-label" for="aadhaar">Aadhaar <span class="required">*</span></label>
+                                <input type="text" id="aadhaar" class="form-control" placeholder="1234 5432 5678"
+                                    pattern="\d{4}\s\d{4}\s\d{4}" maxlength="14" minlength="14"
+                                    title="Aadhaar number must be exactly 12 digits" required>
+                            </div>
+
+                            <!-- Farmer ID -->
+                            <div class="form-group">
+                                <label class="form-label" for="farmerId">Farmer ID <span
+                                        class="required">*</span></label>
+                                <input type="text" id="farmerId" class="form-control" placeholder="12345678901"
+                                    pattern="\d{11}" maxlength="11" minlength="11"
+                                    title="Farmer ID must be exactly 11 digits" required>
+                            </div>
+
+                            <!-- Farmer Photo Upload -->
+                            <div class="form-group">
+                                <label class="form-label">Farmer Photo File <span class="required">*</span></label>
+                                <div class="file-upload-wrapper">
+                                    <span class="file-upload-btn">Choose File</span>
+                                    <span class="file-upload-name" id="fileNameDisplay">No file chosen</span>
+                                    <input type="file" id="farmerPhoto" class="file-upload-input" accept="image/*" required>
+                                </div>
+                            </div>
+
+                            <!-- Address Information Fields -->
+                            <div class="form-group full-width"
+                                style="margin-top: 0.5rem; border-top: 1px dashed #e2e8f0; padding-top: 1rem;">
+                                <h4
+                                    style="font-family: 'Outfit', sans-serif; font-size: 1rem; color: var(--primary-dark); display: flex; align-items: center; gap: 6px;">
+                                    <i data-lucide="map-pin" style="width: 18px; height: 18px;"></i> Address Information
+                                    (पत्ता / Address)
+                                </h4>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="addrVillage">Village <span
+                                        class="required">*</span></label>
+                                <input type="text" id="addrVillage" class="form-control" placeholder="Enter Village / गाव"
+                                    maxlength="50" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="addrTehsil">Tehsil/Taluka <span
+                                        class="required">*</span></label>
+                                <input type="text" id="addrTehsil" class="form-control"
+                                    placeholder="Enter Tehsil / Taluka / तालुका" maxlength="25" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="addrDistrict">District <span
+                                        class="required">*</span></label>
+                                <input type="text" id="addrDistrict" class="form-control"
+                                    placeholder="Enter District / जिल्हा" maxlength="25" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="addrPincode">Pincode <span
+                                        class="required">*</span></label>
+                                <input type="text" id="addrPincode" class="form-control" placeholder="Enter Pincode / पिनकोड"
+                                    pattern="\d{6}" maxlength="6" minlength="6" title="Pincode must be exactly 6 digits"
+                                    required>
+                            </div>
+                        </div>
+
+                        <!-- Land Details Sub-Form -->
+                        <div class="land-details-header">
+                            <span class="land-details-title">Land Details</span>
+                            <button type="button" class="btn-add-row" id="btnAddLandRow">
+                                <i data-lucide="plus"></i> Add Row
+                            </button>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="land-table" id="landTable">
+                                <thead>
+                                    <tr>
+                                        <th>District</th>
+                                        <th>Sub Dist</th>
+                                        <th>Vill</th>
+                                        <th>Gata.No / S.No</th>
+                                        <th>Survey No / S/S</th>
+                                        <th>Area (Hectare)</th>
+                                        <th style="width: 50px; text-align: center;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="landTableBody">
+                                    <!-- Dynamic rows loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Form Action Buttons -->
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-cancel" id="btnCancel"><i data-lucide="x"></i>
+                                Cancel</button>
+                            <button type="button" class="btn btn-generate" id="btnGenerateCard"><i
+                                    data-lucide="credit-card"></i> Generate Farmer Card</button>
+                            <button type="button" class="btn btn-update" id="btnUpdateCard" style="display: none;"><i
+                                    data-lucide="refresh-cw"></i> Update Card</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Right Side: Card Preview & Downloads -->
+            <section class="right-panel">
+
+                <!-- Quick Download Panel -->
+                <div class="action-controls" id="downloadControls" style="display: none;">
+                    <button class="btn btn-download-pdf-a4" id="btnDownloadA4">
+                        <i data-lucide="download"></i> Download PDF - A4
+                    </button>
+                    <button class="btn btn-download-pdf-4x6" id="btnDownload4x6">
+                        <i data-lucide="download-cloud"></i> Download PDF - 4x6
+                    </button>
+                    <button class="btn btn-download-png" id="btnDownloadPng">
+                        <i data-lucide="image"></i> Download PNG
+                    </button>
+                </div>
+
+                <!-- Preview Area -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i data-lucide="eye"></i> Double-Sided Farmer Card Preview</h2>
+                    </div>
+                    <div class="panel-body">
+                        <p class="preview-subtitle">Standard CR80 300 DPI layout matching high precision lamination
+                            machines</p>
+
+                        <div class="preview-container" id="previewArea">
+                            <div class="no-preview" id="noPreviewPlaceholder">
+                                <i data-lucide="credit-card"></i>
+                                <p>Fill the form on the left and click <strong>"Generate Farmer Card"</strong> to
+                                    display the card preview and download options.</p>
+                            </div>
+
+                            <!-- Front Card Canvas Wrapper -->
+                            <div class="card-preview-wrapper" id="frontWrapper" style="display: none;">
+                                <canvas id="frontCanvas" class="card-preview-canvas" width="1561"
+                                    height="1007"></canvas>
+                            </div>
+
+                            <!-- Back Card Canvas Wrapper -->
+                            <div class="card-preview-wrapper" id="backWrapper" style="display: none;">
+                                <canvas id="backCanvas" class="card-preview-canvas" width="1549" height="1015"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Features Grid at Footer -->
+        <div class="features-grid">
+            <div class="feature-box">
+                <div class="feature-icon"><i data-lucide="lock"></i></div>
+                <div class="feature-info">
+                    <h4>100% Client-Side Privacy</h4>
+                    <p>All data and photos are processed in your browser. No data is stored on servers.</p>
+                </div>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon"><i data-lucide="check-circle-2"></i></div>
+                <div class="feature-info">
+                    <h4>Standard PVC ID</h4>
+                    <p>Accurate size ratios matching PVC lamination standards and easy folding layouts.</p>
+                </div>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon"><i data-lucide="globe"></i></div>
+                <div class="feature-info">
+                    <h4>Bilingual Modals & Alerts</h4>
+                    <p>Bilingual warnings and text translation systems for local regions.</p>
+                </div>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon"><i data-lucide="qr-code"></i></div>
+                <div class="feature-info">
+                    <h4>Registry QR Auto-Extract</h4>
+                    <p>Generates security plain text inside the QR code containing farmer details.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2026 Farmer id card pvc generator</p>
+    </footer>
+
+    <!-- Preloaded Templates Base64 definitions to bypass local file CORS constraints -->
+    <script src="templates_base64.js"></script>
+    <!-- Main Javascript File -->
+    <script src="app.js"></script>
+    <script>
+        // Initialize Lucide icons on page load
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

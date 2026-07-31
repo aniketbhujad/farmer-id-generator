@@ -489,10 +489,10 @@ function getQRCodeImage(text) {
         try {
             // Create an in-memory canvas
             const canvas = document.createElement('canvas');
-            
+
             // Convert standard string into a UTF-8 byte sequence string
             const utf8EncodedText = unescape(encodeURIComponent(text));
-            
+
             // Generate QR code using QRious
             new QRious({
                 element: canvas,
@@ -563,7 +563,7 @@ async function renderCardPreviews() {
         // 3. Name Local
         fCtx.fillStyle = '#15803d';
         fCtx.font = 'bold 40px "Inter", sans-serif';
-        fCtx.fillText(nameLocalInput.value || 'शेतकऱ्याचे नाव', 440, 305);
+        fCtx.fillText(nameLocalInput.value, 440, 305);
 
         // 4. Draw Details Block with Bilingual labels (Fix #8)
         const labelX = 440;

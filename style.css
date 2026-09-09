@@ -799,12 +799,11 @@ h1, h2, h3, h4, h5, h6 {
 .card-preview-wrapper {
     position: relative;
     width: 100%;
-    max-width: 500px;
+    max-width: 520px;
     border-radius: 12px;
     box-shadow: var(--shadow-lg);
     background: white;
     overflow: hidden;
-    aspect-ratio: 1.5;
     transition: var(--transition);
 }
 

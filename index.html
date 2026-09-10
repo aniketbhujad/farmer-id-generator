@@ -4,24 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farmer ID Card Generator - Secure Eco Green Card Creator</title>
+    <title>Smart Card Generator - Farmer ID & Ration Card Creator</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Lucide Icons for premium iconography -->
+    <!-- Lucide Icons for iconography -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- jsPDF for A4/4x6 high-resolution PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- QRious.js for generating secure high-capacity QR codes -->
+    <!-- QRious.js for Farmer ID QR codes -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 </head>
 
 <body>
 
-    <!-- Bilingual Consent Modal Overlay -->
+    <!-- Unified Bilingual Consent Modal Overlay -->
     <div id="consentModal" class="modal-overlay active">
         <div class="modal-content">
             <div class="modal-header">
                 <span class="modal-header-icon"><i data-lucide="alert-triangle"></i></span>
-                <span class="modal-header-title">महत्त्वपूर्ण चेतावणी! / Warning!</span>
+                <span class="modal-header-title">महत्त्वपूर्ण चेतावणी! / Important Warning!</span>
             </div>
             <div class="modal-body">
                 <h3 class="warning-subtitle">हे शासकीय पोर्टल नाही / This is NOT a Government Portal</h3>
@@ -29,60 +29,53 @@
                 <div class="modal-sections">
                     <!-- Marathi Section -->
                     <div class="lang-section marathi">
-                        <div class="lang-section-title">मराठी</div>
+                        <div class="lang-section-title">मराठी (सूचना व अटी)</div>
                         <div class="warning-box">
-                            <div class="warning-box-title">दुकानदार/सेवा प्रदात्यांसाठी सूचना:</div>
+                            <div class="warning-box-title">दुकानदार / सीएससी / सेवा प्रदात्यांसाठी सूचना:</div>
                             <p style="font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: #78350f;">
-                                जर तुम्ही या प्रिंटिंग पोर्टलद्वारे शेतकऱ्यांना कार्ड पुरवत असाल तर:
+                                जर तुम्ही या प्रिंटिंग पोर्टलद्वारे नागरिकांना शेतकरी ओळखपत्र किंवा रेशन कार्ड प्रिंट
+                                करून देत असाल तर:
                             </p>
                             <ul>
-                                <li>शेतकऱ्यांना <strong style="color: var(--danger);">स्पष्टपणे</strong> सांगा की हे
-                                    अधिकृत शासकीय कार्ड नाही</li>
-                                <li>हे कार्ड फक्त शेतकरी ID संग्रहित ठेवण्यासाठी आहे</li>
-                                <li>शेतकऱ्यांना ही बाब समजल्यानंतरच आणि त्यांना तरीही कार्ड हवे असेल तरच द्या</li>
-                                <li>भविष्यात शासन अधिकृत कार्ड देऊ शकते</li>
+                                <li>नागरिकांना <strong style="color: var(--danger);">स्पष्टपणे</strong> सांगा की हे
+                                    अधिकृत शासकीय कार्ड नाही.</li>
+                                <li>हे कार्ड केवळ माहिती सुलभ संग्रहित ठेवण्यासाठी व संदर्भासाठी आहे.</li>
+                                <li>नागरिकांना ही बाब पूर्णपणे समजल्यानंतरच व त्यांच्या विनंतीवरूनच प्रिंट द्या.</li>
+                                <li>शासकीय कामांसाठी मूळ शासकीय कागदपत्रे / अधिकृत संकेतस्थळ वापरावे.</li>
                             </ul>
                         </div>
 
                         <div class="danger-box">
                             <i data-lucide="info"></i>
-                            <p><strong>सावधान:</strong> शासनाने अधिकृत कार्ड दिल्यास तुमचे दिलेले कार्ड अवैध ठरेल. योग्य
-                                माहिती न दिल्यास शेतकरी तुमच्यावर कायदेशीर कारवाई करू शकतात.</p>
-                        </div>
-
-                        <div class="info-box">
-                            <h5>शेतकरी बांधवांसाठी:</h5>
-                            <p>हे अनधिकृत कार्ड आहे. केवळ माहिती संग्रहासाठी वापरा.</p>
+                            <p><strong>सावधान:</strong> शासनाने अधिकृत ओळखपत्र दिल्यास तेच ग्राह्य राहील. चुकीची माहिती
+                                किंवा दिशाभूल केल्यास कायदेशीर कारवाई होऊ शकते.</p>
                         </div>
                     </div>
 
                     <!-- English Section -->
                     <div class="lang-section english">
-                        <div class="lang-section-title">English</div>
+                        <div class="lang-section-title">English (Notice & Terms)</div>
                         <div class="warning-box">
-                            <div class="warning-box-title">Notice for Shopkeepers/Service Providers:</div>
+                            <div class="warning-box-title">Notice for Service Providers / Shopkeepers:</div>
                             <p style="font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: #78350f;">
-                                If you are providing cards to farmers through this printing portal:
+                                If you are printing cards (Farmer ID / Ration Card) for citizens through this portal:
                             </p>
                             <ul>
-                                <li>Tell farmers <strong style="color: var(--danger);">clearly</strong> that this is not
-                                    an official government card.</li>
-                                <li>This card is only for storing and organizing farmer ID information.</li>
-                                <li>Provide this card only after the farmer understands this and still requests it.</li>
-                                <li>The government may issue official cards in the future.</li>
+                                <li>Inform citizens <strong style="color: var(--danger);">clearly</strong> that this is
+                                    not an official government card.</li>
+                                <li>This card is designed solely for organizing personal records and quick reference.
+                                </li>
+                                <li>Provide this card only after the citizen fully understands and expressly requests
+                                    it.</li>
+                                <li>For official government schemes, only original government-issued documents apply.
+                                </li>
                             </ul>
                         </div>
 
                         <div class="danger-box">
                             <i data-lucide="info"></i>
-                            <p><strong>CAUTION:</strong> If the government issues an official card, this card will
-                                become invalid. Providing incorrect details may lead to legal actions by farmers.</p>
-                        </div>
-
-                        <div class="info-box" style="background: #f0fdf4; border-color: #bbf7d0;">
-                            <h5 style="color: #166534;">For Farmers:</h5>
-                            <p style="color: #15803d;">This is an unofficial card. Use only for information
-                                storage/reference.</p>
+                            <p><strong>CAUTION:</strong> Official government documents take precedence. Misrepresenting
+                                unofficial cards as government originals is strictly prohibited.</p>
                         </div>
                     </div>
                 </div>
@@ -91,7 +84,7 @@
                 <label class="accept-checkbox-wrapper" for="acceptCheckbox">
                     <input type="checkbox" id="acceptCheckbox" class="accept-checkbox">
                     <span class="accept-label">
-                        मला वरील सर्व बाबी समजल्या आहेत / I have understood all the above points
+                        मला वरील सर्व नियम व अटी समजल्या आहेत / I have read and understood all the terms above
                     </span>
                 </label>
                 <div class="modal-actions">
@@ -104,39 +97,28 @@
         </div>
     </div>
 
-    <!-- Payment Processing Overlay -->
-    <div id="paymentOverlay" class="payment-overlay">
-        <div class="payment-card">
-            <div id="paymentSpinner" class="spinner"></div>
-            <div id="paymentSuccess" class="success-icon">
-                <i data-lucide="check"></i>
-            </div>
-            <h3 id="paymentTitle" class="payment-status-title">Processing Payment...</h3>
-            <p id="paymentDesc" class="payment-status-desc">Generating secure high-resolution card files</p>
-        </div>
-    </div>
-
     <!-- Photo Adjust (Crop) Modal -->
     <div id="cropModal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 480px; border-top: 5px solid #22c55e;">
+        <div class="modal-content" style="max-width: 480px; border-top: 5px solid #16a34a;">
             <div class="modal-header" style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 1.25rem;">
                 <span class="modal-header-icon"
-                    style="color: #22c55e; font-size: 1.5rem; display: flex; align-items: center;"><i
-                        data-lucide="crop"></i></span>
-                <span class="modal-header-title"
-                    style="color: var(--text-main); font-size: 1.35rem; font-weight: 800;">Adjust Your Photo</span>
+                    style="color: #16a34a; font-size: 1.5rem; display: flex; align-items: center;">
+                    <i data-lucide="crop"></i>
+                </span>
+                <span class="modal-header-title" id="cropModalTitle"
+                    style="color: var(--text-main); font-size: 1.35rem; font-weight: 800;">
+                    फोटो अ‍ॅडजस्ट करा / Adjust Photo
+                </span>
             </div>
             <div class="modal-body"
                 style="padding: 1.5rem; display: flex; flex-direction: column; align-items: center; background: #fafafa; max-height: 75vh;">
-
                 <!-- Crop Container with interactive dragging -->
                 <div id="cropContainer"
                     style="position: relative; width: 350px; height: 350px; background: #e2e8f0; border: 2px dashed #cbd5e1; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: move; box-shadow: inset 0 2px 8px rgba(0,0,0,0.06);">
                     <canvas id="cropCanvas" width="350" height="350" style="display: block;"></canvas>
-
-                    <!-- Crop frame (matching the 330x390 aspect ratio on standard cards) -->
+                    <!-- Crop frame (matching aspect ratio) -->
                     <div id="cropTargetFrame"
-                        style="position: absolute; width: 180px; height: 213px; border: 2px solid #22c55e; box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.65); pointer-events: none; border-radius: 4px;">
+                        style="position: absolute; width: 180px; height: 213px; border: 2px solid #16a34a; box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.65); pointer-events: none; border-radius: 4px;">
                     </div>
                 </div>
 
@@ -144,21 +126,21 @@
                 <div
                     style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 1.5rem; gap: 12px;">
                     <button type="button" class="btn" id="btnCropZoomOut"
-                        style="background: white; border: 1.5px solid #22c55e; color: #16a34a; padding: 8px 14px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.9rem; cursor: pointer; flex-shrink: 0; box-shadow: var(--shadow-sm);">
+                        style="background: white; border: 1.5px solid #16a34a; color: #16a34a; padding: 8px 14px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.9rem; cursor: pointer; flex-shrink: 0; box-shadow: var(--shadow-sm);">
                         — Zoom Out
                     </button>
                     <input type="range" id="cropZoomRange" min="0.1" max="3.0" step="0.01" value="1.0"
-                        style="flex: 1; accent-color: #22c55e; height: 6px; cursor: pointer;">
+                        style="flex: 1; accent-color: #16a34a; height: 6px; cursor: pointer;">
                     <button type="button" class="btn" id="btnCropZoomIn"
-                        style="background: white; border: 1.5px solid #22c55e; color: #16a34a; padding: 8px 14px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.9rem; cursor: pointer; flex-shrink: 0; box-shadow: var(--shadow-sm);">
+                        style="background: white; border: 1.5px solid #16a34a; color: #16a34a; padding: 8px 14px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.9rem; cursor: pointer; flex-shrink: 0; box-shadow: var(--shadow-sm);">
                         + Zoom In
                     </button>
                 </div>
 
                 <span
                     style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1.25rem; font-weight: 500; text-align: center; display: flex; align-items: center; gap: 4px;">
-                    <i data-lucide="info" style="width: 14px; height: 14px; color: #16a34a;"></i> Drag the image to
-                    position it within the frame
+                    <i data-lucide="info" style="width: 14px; height: 14px; color: #16a34a;"></i> फोटो फ्रेममध्ये
+                    बसवण्यासाठी माऊसने ड्रॅग करा / Drag to position photo
                 </span>
             </div>
             <div class="modal-footer"
@@ -166,245 +148,623 @@
                 <button type="button" class="btn" id="btnCropCancel"
                     style="background: white; border: 1.5px solid #cbd5e1; color: var(--text-muted); font-weight: 600; padding: 10px 20px; font-size: 0.9rem; border-radius: var(--radius-sm);">Cancel</button>
                 <button type="button" class="btn" id="btnCropSave"
-                    style="background: #22c55e; color: white; font-weight: 700; padding: 10px 22px; font-size: 0.9rem; border-radius: var(--radius-sm); box-shadow: 0 4px 10px rgba(34, 197, 94, 0.25);">Save
+                    style="background: #16a34a; color: white; font-weight: 700; padding: 10px 22px; font-size: 0.9rem; border-radius: var(--radius-sm); box-shadow: 0 4px 10px rgba(22, 163, 74, 0.25);">Save
                     Photo</button>
             </div>
         </div>
     </div>
 
-    <!-- Hidden div for QR Code generation (QRCode.js requires a DOM element) -->
-    <div id="hiddenQrContainer" style="display: none;"></div>
-
     <!-- Main Navigation Bar -->
     <header class="navbar">
         <div class="nav-brand">
-            <div class="nav-brand-logo"><i data-lucide="sprout"></i></div>
-            <div class="nav-brand-text">FARMER ID CARD</div>
-            <div class="nav-brand-tag">v1.0 by Farmer Card</div>
+            <div class="nav-brand-logo"><i data-lucide="layers"></i></div>
+            <div class="nav-brand-text">
+                <span class="brand-title-main">MAHA CARD GENERATOR</span>
+                <span class="brand-title-sub">महा ई-कार्ड पोर्टल</span>
+            </div>
         </div>
+
+        <!-- Center Tabs Navigation -->
+        <div class="nav-tabs-wrapper">
+            <button class="nav-tab-btn active" id="tabFarmerBtn" type="button">
+                <i data-lucide="sprout"></i>
+                <span>शेतकरी ओळखपत्र (Farmer ID)</span>
+            </button>
+            <button class="nav-tab-btn" id="tabRationBtn" type="button">
+                <i data-lucide="utensils"></i>
+                <span>रेशन कार्ड (Ration Card)</span>
+            </button>
+        </div>
+
+        <!-- Right Controls -->
         <div class="nav-controls">
-            <select class="select-control" id="templateSelector">
-                <option value="template1">Template - 1 (Eco Green)</option>
-            </select>
+            <!-- Transliteration Toggle Button -->
+            <button class="btn-translit-toggle" id="btnToggleTranslit" type="button"
+                title="Click to enable Marathi Transliteration">
+                <i data-lucide="languages"></i>
+                <span id="translitBadgeText">English Typing: ON</span>
+            </button>
+
+            <!-- Language Dropdown -->
             <select class="select-control" id="langSelector">
-                <option value="mr">Marathi (मराठी)</option>
-                <option value="hi">Hindi (हिन्दी)</option>
-                <option value="en">English (Eng)</option>
+                <option value="en" selected>English (Eng)</option>
+                <option value="mr">मराठी (Marathi)</option>
             </select>
-            <button class="btn-nav-back" id="btnBackHome">
-                <i data-lucide="home"></i> Back to Home
+
+            <button class="btn-nav-back" id="btnBackHome" type="button">
+                <i data-lucide="rotate-ccw"></i> रीलोड / Reset
             </button>
         </div>
     </header>
 
+    <!-- Transliteration Info Banner (Bilingual Helper) -->
+    <div class="translit-bar" id="translitNotice">
+        <div class="translit-bar-content">
+            <i data-lucide="sparkles"></i>
+            <span><strong>स्मार्ट मराठी टायपिंग:</strong> कोणत्याही टेक्स्ट बॉक्समध्ये इंग्रजीत स्पेलिंग टाईप करून Space
+                दाबा, आपोआप शुद्ध मराठीत रुपांतर होईल! (उदा. <em>ramesh</em> &rarr; <strong>रमेश</strong>,
+                <em>patil</em> &rarr; <strong>पाटील</strong>, <em>patni</em> &rarr; <strong>पत्नी</strong>)</span>
+        </div>
+    </div>
+
     <!-- Main Content Container -->
     <main class="container">
-        <div class="dashboard-layout">
 
-            <!-- Left Side: Form Details Input -->
-            <section class="panel">
-                <div class="panel-header">
-                    <h2 class="panel-title"><i data-lucide="file-edit"></i> Fill Farmer Details</h2>
-                    <span class="nav-brand-tag" style="background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe;">
-                        <i data-lucide="shield-check"
-                            style="width: 14px; height: 14px; vertical-align: middle; margin-right: 4px; display: inline-block;"></i>SECURE
-                        SANDBOX
-                    </span>
-                </div>
-                <div class="panel-body">
-                    <form id="farmerForm" onsubmit="event.preventDefault();">
+        <!-- ========================================================================= -->
+        <!-- TAB 1: FARMER ID CARD GENERATOR                                           -->
+        <!-- ========================================================================= -->
+        <div id="farmerSection" class="tab-content active">
+            <div class="dashboard-layout">
 
-                        <div class="form-grid">
-                            <!-- Name in English -->
-                            <div class="form-group">
-                                <label class="form-label" for="nameEng">Name Eng <span class="required">*</span></label>
-                                <input type="text" id="nameEng" class="form-control" placeholder="Farmer name" required>
-                            </div>
+                <!-- Left Side: Farmer Form Input -->
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i data-lucide="file-edit"></i> Fill Farmer Details / शेतकरी माहिती भरा
+                        </h2>
+                        <span class="nav-brand-tag tag-secure">
+                            <i data-lucide="shield-check"></i>
+                            <span>SECURE CLIENT-SIDE</span>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <form id="farmerForm" onsubmit="event.preventDefault();">
 
-                            <!-- Name Local -->
-                            <div class="form-group">
-                                <label class="form-label" for="nameLocal">Name Local</label>
-                                <input type="text" id="nameLocal" class="form-control" placeholder="शेतकऱ्याचे नाव">
-                            </div>
+                            <div class="form-grid">
+                                <!-- Name in English -->
+                                <div class="form-group">
+                                    <label class="form-label" for="nameEng">Name in English <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="nameEng" class="form-control"
+                                        placeholder="e.g. Ramesh Kisan Patil" required>
+                                </div>
 
-                            <!-- DOB -->
-                            <div class="form-group">
-                                <label class="form-label" for="dob">DOB <span class="required">*</span></label>
-                                <input type="text" id="dob" class="form-control" placeholder="DD/MM/YYYY" required>
-                            </div>
+                                <!-- Name Local (Marathi) -->
+                                <div class="form-group">
+                                    <label class="form-label" for="nameLocal">स्थानिक भाषेतील नाव (Name Local) <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="nameLocal" class="form-control transliterate-mr"
+                                        placeholder="उदा. रमेश किसन पाटील" required>
+                                </div>
 
-                            <!-- Gender -->
-                            <div class="form-group">
-                                <label class="form-label" for="gender">Gender</label>
-                                <select id="gender" class="form-control">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
+                                <!-- DOB -->
+                                <div class="form-group">
+                                    <label class="form-label" for="dob">जन्म तारीख / DOB <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="dob" class="form-control" placeholder="DD/MM/YYYY" required>
+                                </div>
 
-                            <!-- Mobile -->
-                            <div class="form-group">
-                                <label class="form-label" for="mobile">Mobile <span class="required">*</span></label>
-                                <input type="tel" id="mobile" class="form-control" placeholder="1234567890"
-                                    pattern="\d{10}" maxlength="10" minlength="10"
-                                    title="Mobile number must be exactly 10 digits" required>
-                            </div>
+                                <!-- Gender -->
+                                <div class="form-group">
+                                    <label class="form-label" for="gender">लिंग / Gender <span
+                                            class="required">*</span></label>
+                                    <select id="gender" class="form-control">
+                                        <option value="Male">Male / पुरुष</option>
+                                        <option value="Female">Female / स्त्री</option>
+                                        <option value="Other">Other / इतर</option>
+                                    </select>
+                                </div>
 
-                            <!-- Aadhaar -->
-                            <div class="form-group">
-                                <label class="form-label" for="aadhaar">Aadhaar <span class="required">*</span></label>
-                                <input type="text" id="aadhaar" class="form-control" placeholder="1234 5432 5678"
-                                    pattern="\d{4}\s\d{4}\s\d{4}" maxlength="14" minlength="14"
-                                    title="Aadhaar number must be exactly 12 digits" required>
-                            </div>
+                                <!-- Mobile -->
+                                <div class="form-group">
+                                    <label class="form-label" for="mobile">मोबाईल / Mobile <span
+                                            class="required">*</span></label>
+                                    <input type="tel" id="mobile" class="form-control"
+                                        placeholder="10 अंकी मोबाईल क्रमांक" pattern="\d{10}" maxlength="10"
+                                        minlength="10" required>
+                                </div>
 
-                            <!-- Farmer ID -->
-                            <div class="form-group">
-                                <label class="form-label" for="farmerId">Farmer ID <span
-                                        class="required">*</span></label>
-                                <input type="text" id="farmerId" class="form-control" placeholder="12345678901"
-                                    pattern="\d{11}" maxlength="11" minlength="11"
-                                    title="Farmer ID must be exactly 11 digits" required>
-                            </div>
+                                <!-- Aadhaar -->
+                                <div class="form-group">
+                                    <label class="form-label" for="aadhaar">आधार क्रमांक / Aadhaar <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="aadhaar" class="form-control" placeholder="1234 5432 5678"
+                                        maxlength="14" minlength="14" required>
+                                </div>
 
-                            <!-- Farmer Photo Upload -->
-                            <div class="form-group">
-                                <label class="form-label">Farmer Photo File <span class="required">*</span></label>
-                                <div class="file-upload-wrapper">
-                                    <span class="file-upload-btn">Choose File</span>
-                                    <span class="file-upload-name" id="fileNameDisplay">No file chosen</span>
-                                    <input type="file" id="farmerPhoto" class="file-upload-input" accept="image/*" required>
+                                <!-- Farmer ID -->
+                                <div class="form-group">
+                                    <label class="form-label" for="farmerId">शेतकरी ID / Farmer ID <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="farmerId" class="form-control"
+                                        placeholder="11 अंकी शेतकरी आयडी (e.g. 12345678901)" maxlength="11"
+                                        minlength="11" required>
+                                </div>
+
+                                <!-- Farmer Photo Upload -->
+                                <div class="form-group">
+                                    <label class="form-label">शेतकरी फोटो / Farmer Photo <span
+                                            class="required">*</span></label>
+                                    <div class="file-upload-wrapper">
+                                        <span class="file-upload-btn">Choose File</span>
+                                        <span class="file-upload-name" id="fileNameDisplay">No file chosen</span>
+                                        <input type="file" id="farmerPhoto" class="file-upload-input" accept="image/*"
+                                            required>
+                                    </div>
+                                </div>
+
+                                <!-- Address Information Fields -->
+                                <div class="form-group full-width"
+                                    style="margin-top: 0.5rem; border-top: 1px dashed #e2e8f0; padding-top: 1rem;">
+                                    <h4
+                                        style="font-size: 1rem; color: #166534; display: flex; align-items: center; gap: 6px;">
+                                        <i data-lucide="map-pin" style="width: 18px; height: 18px;"></i> पत्ता माहिती /
+                                        Address Information
+                                    </h4>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="addrVillage">गाव / Village <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="addrVillage" class="form-control transliterate-mr"
+                                        placeholder="उदा. केडगाव / Kedgaon" maxlength="25" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="addrTehsil">तालुका / Tehsil <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="addrTehsil" class="form-control transliterate-mr"
+                                        placeholder="उदा. नगर / Nagar" maxlength="25" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="addrDistrict">जिल्हा / District <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="addrDistrict" class="form-control transliterate-mr"
+                                        placeholder="उदा. अहिल्यानगर / Ahilyanagar" maxlength="25" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="addrPincode">पिनकोड / Pincode <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="addrPincode" class="form-control" placeholder="6 अंकी पिनकोड"
+                                        pattern="\d{6}" maxlength="6" minlength="6" required>
                                 </div>
                             </div>
 
-                            <!-- Address Information Fields -->
-                            <div class="form-group full-width"
-                                style="margin-top: 0.5rem; border-top: 1px dashed #e2e8f0; padding-top: 1rem;">
-                                <h4
-                                    style="font-family: 'Outfit', sans-serif; font-size: 1rem; color: var(--primary-dark); display: flex; align-items: center; gap: 6px;">
-                                    <i data-lucide="map-pin" style="width: 18px; height: 18px;"></i> Address Information
-                                    (पत्ता / Address)
-                                </h4>
+                            <!-- Land Details Sub-Form -->
+                            <div class="land-details-header">
+                                <span class="land-details-title"><i data-lucide="table"></i> जमिनीचा तपशील / Land
+                                    Details (Max 5)</span>
+                                <button type="button" class="btn-add-row" id="btnAddLandRow">
+                                    <i data-lucide="plus"></i> Add Row
+                                </button>
                             </div>
 
-                            <div class="form-group">
-                                <label class="form-label" for="addrVillage">Village <span
-                                        class="required">*</span></label>
-                                <input type="text" id="addrVillage" class="form-control" placeholder="Enter Village / गाव"
-                                    maxlength="50" required>
+                            <div class="table-wrapper">
+                                <table class="land-table" id="landTable">
+                                    <thead>
+                                        <tr>
+                                            <th>जिल्हा (District)</th>
+                                            <th>तालुका (Sub Dist)</th>
+                                            <th>गाव (Village)</th>
+                                            <th>गट नं. (Gat No)</th>
+                                            <th>खाते नं. (Survey)</th>
+                                            <th>क्षेत्र (Hectare)</th>
+                                            <th style="width: 50px; text-align: center;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="landTableBody">
+                                        <!-- Dynamic rows loaded here -->
+                                    </tbody>
+                                </table>
                             </div>
 
-                            <div class="form-group">
-                                <label class="form-label" for="addrTehsil">Tehsil/Taluka <span
-                                        class="required">*</span></label>
-                                <input type="text" id="addrTehsil" class="form-control"
-                                    placeholder="Enter Tehsil / Taluka / तालुका" maxlength="25" required>
+                            <!-- Form Action Buttons -->
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-cancel" id="btnCancel"><i data-lucide="x"></i>
+                                    Cancel / रीसेट</button>
+                                <button type="button" class="btn btn-generate" id="btnGenerateCard"><i
+                                        data-lucide="credit-card"></i> Generate Farmer Card</button>
+                                <button type="button" class="btn btn-update" id="btnUpdateCard"
+                                    style="display: none;"><i data-lucide="refresh-cw"></i> Update Card</button>
                             </div>
+                        </form>
+                    </div>
+                </section>
 
-                            <div class="form-group">
-                                <label class="form-label" for="addrDistrict">District <span
-                                        class="required">*</span></label>
-                                <input type="text" id="addrDistrict" class="form-control"
-                                    placeholder="Enter District / जिल्हा" maxlength="25" required>
-                            </div>
+                <!-- Right Side: Farmer Card Preview & Downloads -->
+                <section class="right-panel">
+                    <!-- Quick Download Panel -->
+                    <div class="action-controls" id="downloadControls" style="display: none;">
+                        <button class="btn btn-download-pdf-a4" id="btnDownloadA4">
+                            <i data-lucide="download"></i> Download PDF - A4
+                        </button>
+                        <button class="btn btn-download-pdf-4x6" id="btnDownload4x6">
+                            <i data-lucide="download-cloud"></i> Download PDF - 4x6
+                        </button>
+                        <button class="btn btn-download-png" id="btnDownloadPng">
+                            <i data-lucide="image"></i> Download PNG
+                        </button>
+                    </div>
 
-                            <div class="form-group">
-                                <label class="form-label" for="addrPincode">Pincode <span
-                                        class="required">*</span></label>
-                                <input type="text" id="addrPincode" class="form-control" placeholder="Enter Pincode / पिनकोड"
-                                    pattern="\d{6}" maxlength="6" minlength="6" title="Pincode must be exactly 6 digits"
-                                    required>
+                    <!-- Preview Area -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title"><i data-lucide="eye"></i> Double-Sided Farmer Card Preview</h2>
+                        </div>
+                        <div class="panel-body">
+                            <p class="preview-subtitle">Standard CR80 300 DPI high-precision PVC format with Registry QR
+                            </p>
+
+                            <div class="preview-container" id="previewArea">
+                                <div class="no-preview" id="noPreviewPlaceholder">
+                                    <i data-lucide="credit-card"></i>
+                                    <p>Fill the form on the left and click <strong>"Generate Farmer Card"</strong> to
+                                        display the card preview and download options.</p>
+                                </div>
+
+                                <!-- Front Card Canvas Wrapper -->
+                                <div class="card-preview-wrapper" id="frontWrapper" style="display: none;">
+                                    <canvas id="frontCanvas" class="card-preview-canvas" width="1561"
+                                        height="1007"></canvas>
+                                </div>
+
+                                <!-- Back Card Canvas Wrapper -->
+                                <div class="card-preview-wrapper" id="backWrapper" style="display: none;">
+                                    <canvas id="backCanvas" class="card-preview-canvas" width="1549"
+                                        height="1015"></canvas>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                </section>
 
-                        <!-- Land Details Sub-Form -->
-                        <div class="land-details-header">
-                            <span class="land-details-title">Land Details</span>
-                            <button type="button" class="btn-add-row" id="btnAddLandRow">
-                                <i data-lucide="plus"></i> Add Row
-                            </button>
-                        </div>
+            </div>
+        </div>
 
-                        <div class="table-wrapper">
-                            <table class="land-table" id="landTable">
-                                <thead>
-                                    <tr>
-                                        <th>District</th>
-                                        <th>Sub Dist</th>
-                                        <th>Vill</th>
-                                        <th>Gata.No / S.No</th>
-                                        <th>Survey No / S/S</th>
-                                        <th>Area (Hectare)</th>
-                                        <th style="width: 50px; text-align: center;">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="landTableBody">
-                                    <!-- Dynamic rows loaded here -->
-                                </tbody>
-                            </table>
-                        </div>
 
-                        <!-- Form Action Buttons -->
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-cancel" id="btnCancel"><i data-lucide="x"></i>
-                                Cancel</button>
-                            <button type="button" class="btn btn-generate" id="btnGenerateCard"><i
-                                    data-lucide="credit-card"></i> Generate Farmer Card</button>
-                            <button type="button" class="btn btn-update" id="btnUpdateCard" style="display: none;"><i
-                                    data-lucide="refresh-cw"></i> Update Card</button>
-                        </div>
-                    </form>
-                </div>
-            </section>
+        <!-- ========================================================================= -->
+        <!-- TAB 2: RATION CARD GENERATOR (रेशन कार्ड जनरेटर)                          -->
+        <!-- ========================================================================= -->
+        <div id="rationSection" class="tab-content">
+            <div class="dashboard-layout">
 
-            <!-- Right Side: Card Preview & Downloads -->
-            <section class="right-panel">
-
-                <!-- Quick Download Panel -->
-                <div class="action-controls" id="downloadControls" style="display: none;">
-                    <button class="btn btn-download-pdf-a4" id="btnDownloadA4">
-                        <i data-lucide="download"></i> Download PDF - A4
-                    </button>
-                    <button class="btn btn-download-pdf-4x6" id="btnDownload4x6">
-                        <i data-lucide="download-cloud"></i> Download PDF - 4x6
-                    </button>
-                    <button class="btn btn-download-png" id="btnDownloadPng">
-                        <i data-lucide="image"></i> Download PNG
-                    </button>
-                </div>
-
-                <!-- Preview Area -->
-                <div class="panel">
+                <!-- Left Side: Ration Card Form Input -->
+                <section class="panel">
                     <div class="panel-header">
-                        <h2 class="panel-title"><i data-lucide="eye"></i> Double-Sided Farmer Card Preview</h2>
+                        <h2 class="panel-title"><i data-lucide="file-text"></i> रेशन कार्ड तपशील भरा / Fill Ration Card
+                            Details</h2>
+                        <span class="nav-brand-tag tag-pds">
+                            <i data-lucide="award"></i>
+                            <span>MAHARASHTRA PDS FORMAT</span>
+                        </span>
                     </div>
                     <div class="panel-body">
-                        <p class="preview-subtitle">Standard CR80 300 DPI layout matching high precision lamination
-                            machines</p>
+                        <form id="rationForm" onsubmit="event.preventDefault();">
 
-                        <div class="preview-container" id="previewArea">
-                            <div class="no-preview" id="noPreviewPlaceholder">
-                                <i data-lucide="credit-card"></i>
-                                <p>Fill the form on the left and click <strong>"Generate Farmer Card"</strong> to
-                                    display the card preview and download options.</p>
+                            <!-- Template Selector (3 Colors: Yellow, Orange, Gray) -->
+                            <div class="ration-template-selector-box">
+                                <label class="form-label"
+                                    style="font-size: 0.95rem; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 6px;">
+                                    <i data-lucide="palette"></i> रेशन कार्ड प्रकार व रंग निवडा / Select Card Template:
+                                </label>
+                                <div class="template-pills-grid">
+                                    <!-- Yellow Card Option -->
+                                    <label class="template-card-pill active" id="pillYellow" for="radioYellow">
+                                        <input type="radio" name="rationTemplateRadio" id="radioYellow"
+                                            value="rashan_yellow" checked>
+                                        <div class="color-swatch swatch-yellow"></div>
+                                        <div class="pill-info">
+                                            <span class="pill-title">पिवळे रेशन कार्ड</span>
+                                            <span class="pill-sub">Yellow (BPL / AAY)</span>
+                                        </div>
+                                    </label>
+
+                                    <!-- Orange Card Option -->
+                                    <label class="template-card-pill" id="pillOrange" for="radioOrange">
+                                        <input type="radio" name="rationTemplateRadio" id="radioOrange"
+                                            value="rashan_orange">
+                                        <div class="color-swatch swatch-orange"></div>
+                                        <div class="pill-info">
+                                            <span class="pill-title">केशरी रेशन कार्ड</span>
+                                            <span class="pill-sub">Orange (APL / PHH)</span>
+                                        </div>
+                                    </label>
+
+                                    <!-- Gray/White Card Option -->
+                                    <label class="template-card-pill" id="pillGray" for="radioGray">
+                                        <input type="radio" name="rationTemplateRadio" id="radioGray"
+                                            value="rashan_gray">
+                                        <div class="color-swatch swatch-gray"></div>
+                                        <div class="pill-info">
+                                            <span class="pill-title">पांढरे / राखाडी कार्ड</span>
+                                            <span class="pill-sub">Gray/White (NPHH)</span>
+                                        </div>
+                                    </label>
+                                </div>
                             </div>
 
-                            <!-- Front Card Canvas Wrapper -->
-                            <div class="card-preview-wrapper" id="frontWrapper" style="display: none;">
-                                <canvas id="frontCanvas" class="card-preview-canvas" width="1561"
-                                    height="1007"></canvas>
+                            <!-- Front Side Form Fields -->
+                            <div class="form-grid" style="margin-top: 1rem;">
+
+                                <!-- Head of Family Name -->
+                                <div class="form-group full-width">
+                                    <label class="form-label" for="rationHeadName">
+                                        कुटुंब प्रमुखाचे नाव / Head of Family Name <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="rationHeadName" class="form-control transliterate-mr"
+                                        placeholder="उदा. रमेश किसन पाटील / Ramesh Kisan Patil" required>
+                                </div>
+
+                                <!-- Ration Card Number -->
+                                <div class="form-group">
+                                    <label class="form-label" for="rationCardNo">
+                                        रेशन कार्ड नंबर / Ration Card Number <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="rationCardNo" class="form-control"
+                                        placeholder="12 अंकी कार्ड क्र. (e.g. 2720 0123 4567)" maxlength="14"
+                                        minlength="12" required>
+                                </div>
+
+                                <!-- Mobile Number -->
+                                <div class="form-group">
+                                    <label class="form-label" for="rationMobile">
+                                        मोबाईल नंबर / Mobile Number <span class="required">*</span>
+                                    </label>
+                                    <input type="tel" id="rationMobile" class="form-control"
+                                        placeholder="10 अंकी मोबाईल" pattern="\d{10}" maxlength="10" minlength="10"
+                                        required>
+                                </div>
+
+                                <!-- FPS Number -->
+                                <div class="form-group">
+                                    <label class="form-label" for="rationFpsNo">
+                                        रास्त भाव दुकान क्र. / FPS Shop No. <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="rationFpsNo" class="form-control"
+                                        placeholder="उदा. FPS-412001 / 2720054" maxlength="20" required>
+                                </div>
+
+                                <!-- Ration Card Type Display -->
+                                <div class="form-group">
+                                    <label class="form-label" for="rationCardType">
+                                        कार्ड प्रकार / Card Scheme Type <span class="required">*</span>
+                                    </label>
+                                    <select id="rationCardType" class="form-control">
+                                        <option value="पिवळे (BPL/अंत्योदय)">पिवळे (BPL / Antyodaya / AAY)</option>
+                                        <option value="केशरी (APL/प्राधान्य कुटुंब)">केशरी (APL / Priority / PHH)
+                                        </option>
+                                        <option value="पांढरे/राखाडी (NPHH)">पांढरे / राखाडी (Non-Priority / NPHH)
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <!-- Number of Units -->
+                                <div class="form-group">
+                                    <label class="form-label" for="rationUnits">
+                                        एकूण युनिट्स / No. of Units (सदस्य) <span class="required">*</span>
+                                        <span style="font-size:0.75rem; color:var(--text-muted);">(कमाल 99 / Max
+                                            99)</span>
+                                    </label>
+                                    <input type="number" id="rationUnits" class="form-control" min="1" max="99"
+                                        value="4" required>
+                                </div>
+
+                                <!-- Family Total Income -->
+                                <div class="form-group">
+                                    <label class="form-label" for="rationIncome">
+                                        कुटुंबाचे एकूण वार्षिक उत्पन्न / Annual Income <span class="required">*</span>
+                                        <span style="font-size:0.75rem; color:var(--text-muted);">(उदा. 45000 / कमाल 9
+                                            अंक)</span>
+                                    </label>
+                                    <input type="text" id="rationIncome" class="form-control" placeholder="उदा. 45000"
+                                        maxlength="12" required>
+                                </div>
+
+                                <!-- Issue Date -->
+                                <div class="form-group">
+                                    <label class="form-label" for="rationIssueDate">
+                                        वाटप दिनांक / Issue Date <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="rationIssueDate" class="form-control"
+                                        placeholder="DD/MM/YYYY" maxlength="10" required>
+                                </div>
+
+                                <!-- Head Photo Upload -->
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        कुटुंब प्रमुख फोटो / Head Photo <span class="required">*</span>
+                                    </label>
+                                    <div class="file-upload-wrapper" id="rationPhotoWrapper">
+                                        <span class="file-upload-btn">Choose Photo</span>
+                                        <span class="file-upload-name" id="rationFileNameDisplay">No photo chosen</span>
+                                        <input type="file" id="rationPhoto" class="file-upload-input" accept="image/*"
+                                            required>
+                                    </div>
+                                </div>
+
+                                <!-- Signature Upload -->
+                                <div class="form-group full-width">
+                                    <label class="form-label" for="rationSignature">
+                                        स्वाक्षरी अपलोड / Upload Signature (ऐच्छिक / Optional)
+                                    </label>
+                                    <div class="file-upload-wrapper" id="rationSignatureWrapper">
+                                        <span class="file-upload-btn">Choose Signature</span>
+                                        <span class="file-upload-name" id="rationSigFileNameDisplay">No signature file
+                                            chosen</span>
+                                        <input type="file" id="rationSignature" class="file-upload-input"
+                                            accept="image/*">
+                                    </div>
+                                </div>
+
+                                <!-- Address Sub-Section -->
+                                <div class="form-group full-width"
+                                    style="margin-top: 0.5rem; border-top: 1px dashed #cbd5e1; padding-top: 1rem;">
+                                    <h4
+                                        style="font-size: 1rem; color: #78350f; display: flex; align-items: center; gap: 6px;">
+                                        <i data-lucide="home" style="width: 18px; height: 18px;"></i> संपूर्ण पत्ता /
+                                        Full Residential Address
+                                    </h4>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="rationVillage">गाव / Village / Ward <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="rationVillage" class="form-control transliterate-mr"
+                                        placeholder="उदा. केडगाव" maxlength="50" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="rationTehsil">तालुका / Tehsil / Sub-District <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="rationTehsil" class="form-control transliterate-mr"
+                                        placeholder="उदा. हवेली" maxlength="25" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="rationDistrict">जिल्हा / District <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="rationDistrict" class="form-control transliterate-mr"
+                                        placeholder="उदा. पुणे" maxlength="25" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="rationPincode">पिनकोड / Pincode <span
+                                            class="required">*</span></label>
+                                    <input type="text" id="rationPincode" class="form-control"
+                                        placeholder="6 अंकी पिनकोड" pattern="\d{6}" maxlength="6" minlength="6"
+                                        required>
+                                </div>
+
                             </div>
 
-                            <!-- Back Card Canvas Wrapper -->
-                            <div class="card-preview-wrapper" id="backWrapper" style="display: none;">
-                                <canvas id="backCanvas" class="card-preview-canvas" width="1549" height="1015"></canvas>
+                            <!-- Back Side: Family Members Table Details -->
+                            <div class="land-details-header"
+                                style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-sm); padding: 10px 14px; margin-top: 1.5rem;">
+                                <div>
+                                    <span class="land-details-title" style="color: #1e293b;">
+                                        <i data-lucide="users"></i> कुटुंबातील सदस्यांचा तपशील / Family Members (Max 7)
+                                    </span>
+                                    <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+                                        मागील बाजूवर प्रिंट होणारे सदस्य (कमाल 7 सदस्य): अ.क्र., सदस्याचे नाव, वय/लिंग,
+                                        नाते, आधार क्र.
+                                    </p>
+                                </div>
+                                <button type="button" class="btn-add-row" id="btnAddRationMember">
+                                    <i data-lucide="user-plus"></i> + सदस्य जोडा (Add Member)
+                                </button>
+                            </div>
+
+                            <div class="table-wrapper" style="margin-top: 0.75rem;">
+                                <table class="land-table" id="rationMembersTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 50px; text-align: center;">अ.क्र. (SR.)</th>
+                                            <th>सदस्याचे नाव (MEMBER NAME)</th>
+                                            <th style="width: 140px;">वय / लिंग (AGE / GENDER)</th>
+                                            <th style="width: 130px;">नाते (RELATION)</th>
+                                            <th style="width: 170px;">आधार क्र. (AADHAAR NO.)</th>
+                                            <th style="width: 45px; text-align: center;">कृती</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="rationMembersTableBody">
+                                        <!-- Dynamic family member rows loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Form Action Buttons -->
+                            <div class="form-actions" style="margin-top: 1.5rem;">
+                                <button type="button" class="btn btn-cancel" id="btnRationCancel">
+                                    <i data-lucide="rotate-ccw"></i> रीसेट / Clear
+                                </button>
+                                <button type="button" class="btn btn-generate" id="btnGenerateRationCard"
+                                    style="background: #b45309;">
+                                    <i data-lucide="credit-card"></i> रेशन कार्ड तयार करा (Generate Ration Card)
+                                </button>
+                                <button type="button" class="btn btn-update" id="btnUpdateRationCard"
+                                    style="display: none; background: #0284c7;">
+                                    <i data-lucide="refresh-cw"></i> कार्ड अपडेट करा (Update Card)
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Right Side: Ration Card Preview & Downloads -->
+                <section class="right-panel">
+
+                    <!-- Quick Download Controls for Ration Card -->
+                    <div class="action-controls" id="rationDownloadControls" style="display: none;">
+                        <button class="btn btn-download-pdf-a4" id="btnRationDownloadA4">
+                            <i data-lucide="download"></i> Download PDF - A4
+                        </button>
+                        <button class="btn btn-download-pdf-4x6" id="btnRationDownload4x6">
+                            <i data-lucide="download-cloud"></i> Download PDF - 4x6
+                        </button>
+                        <button class="btn btn-download-png" id="btnRationDownloadPng">
+                            <i data-lucide="image"></i> Download PNG
+                        </button>
+                    </div>
+
+                    <!-- Ration Card Canvas Preview Area -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title"><i data-lucide="eye"></i> रेशन कार्ड प्रिव्ह्यू / Ration Card
+                                Preview (Double-Sided)</h2>
+                            <span id="rationPreviewBadge" class="nav-brand-tag tag-template">
+                                🟡 YELLOW TEMPLATE (BPL / AAY)
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            <p class="preview-subtitle">
+                                महाराष्ट्र शासन सार्वजनिक वितरण प्रणाली - Official PVC Card Format (Front & Back)
+                            </p>
+
+                            <div class="preview-container" id="rationPreviewArea">
+                                <div class="no-preview" id="rationNoPreviewPlaceholder">
+                                    <i data-lucide="utensils" style="width: 52px; height: 52px; color: #b45309;"></i>
+                                    <p>डाव्या बाजूचा फॉर्म भरा आणि <strong>"रेशन कार्ड तयार करा"</strong> बटनावर क्लिक
+                                        करा.</p>
+                                    <span style="font-size: 0.85rem; color: var(--text-muted);">
+                                        Fill in details on the left and click <strong>"Generate Ration Card"</strong> to
+                                        display front & back preview.
+                                    </span>
+                                </div>
+
+                                <!-- Front Ration Card Canvas Wrapper -->
+                                <div class="card-preview-wrapper" id="rationFrontWrapper" style="display: none;">
+                                    <div class="card-side-label"><i data-lucide="square-asterisk"></i> समोरील बाजू /
+                                        Front Side</div>
+                                    <canvas id="rationFrontCanvas" class="card-preview-canvas" width="1536"
+                                        height="1024"></canvas>
+                                </div>
+
+                                <!-- Back Ration Card Canvas Wrapper -->
+                                <div class="card-preview-wrapper" id="rationBackWrapper" style="display: none;">
+                                    <div class="card-side-label"><i data-lucide="table"></i> मागील बाजू / Back Side
+                                        (कुटुंब सदस्य तपशील)</div>
+                                    <canvas id="rationBackCanvas" class="card-preview-canvas" width="1536"
+                                        height="1024"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
 
+                </section>
+
+            </div>
         </div>
 
         <!-- Features Grid at Footer -->
@@ -413,39 +773,42 @@
                 <div class="feature-icon"><i data-lucide="lock"></i></div>
                 <div class="feature-info">
                     <h4>100% Client-Side Privacy</h4>
-                    <p>All data and photos are processed in your browser. No data is stored on servers.</p>
+                    <p>सर्व माहिती व फोटो थेट तुमच्या ब्राऊझरमध्ये प्रोसेस होतात. कोणताही डेटा सर्व्हरवर सेव्ह होत नाही.
+                    </p>
                 </div>
             </div>
             <div class="feature-box">
-                <div class="feature-icon"><i data-lucide="check-circle-2"></i></div>
+                <div class="feature-icon"><i data-lucide="credit-card"></i></div>
                 <div class="feature-info">
-                    <h4>Standard PVC ID</h4>
-                    <p>Accurate size ratios matching PVC lamination standards and easy folding layouts.</p>
+                    <h4>Standard PVC Print Sizing</h4>
+                    <p>PVC कार्ड लेमिनेशन मशीनसाठी तंतोतंत CR80 रेशो, A4 व 4x6 प्रिंटिंग लेआउट.</p>
                 </div>
             </div>
             <div class="feature-box">
-                <div class="feature-icon"><i data-lucide="globe"></i></div>
+                <div class="feature-icon"><i data-lucide="languages"></i></div>
                 <div class="feature-info">
-                    <h4>Bilingual Modals & Alerts</h4>
-                    <p>Bilingual warnings and text translation systems for local regions.</p>
+                    <h4>स्मार्ट मराठी टायपिंग</h4>
+                    <p>इंग्रजीत स्पेलिंग टाईप करा, शुद्ध मराठीत रूपांतर होऊन कार्डवर रिअल-टाईम अपडेट होईल.</p>
                 </div>
             </div>
             <div class="feature-box">
-                <div class="feature-icon"><i data-lucide="qr-code"></i></div>
+                <div class="feature-icon"><i data-lucide="palette"></i></div>
                 <div class="feature-info">
-                    <h4>Registry QR Auto-Extract</h4>
-                    <p>Generates security plain text inside the QR code containing farmer details.</p>
+                    <h4>3 Color Ration Templates</h4>
+                    <p>पिवळे (Yellow), केशरी (Orange), आणि पांढरे/राखाडी (Gray) मूळ टेम्पलेट्स सपोर्ट.</p>
                 </div>
             </div>
         </div>
     </main>
 
     <footer class="app-footer">
-        <p>&copy; 2026 Farmer id card generator</p>
+        <p>&copy; 2026 Maha Smart Card Generator - Farmer ID & Ration Card Creator</p>
     </footer>
 
-    <!-- Preloaded Templates Base64 definitions to bypass local file CORS constraints -->
+    <!-- Preloaded Templates Base64 definitions -->
     <script src="templates_base64.js"></script>
+    <!-- Marathi Transliteration Engine -->
+    <script src="transliterate.js"></script>
     <!-- Main Javascript File -->
     <script src="app.js"></script>
     <script>

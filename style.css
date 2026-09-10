@@ -338,6 +338,68 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ========================================================================= */
+/* Header Feature / Status Badges                                            */
+/* ========================================================================= */
+.nav-brand-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+    transition: var(--transition);
+    white-space: nowrap;
+    cursor: default;
+}
+
+.nav-brand-tag:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-brand-tag i {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+/* Maharashtra PDS Format Badge */
+.nav-brand-tag.tag-pds {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 45%, #fde68a 100%);
+    color: #92400e;
+    border: 1.5px solid #f59e0b;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.nav-brand-tag.tag-pds i {
+    color: #b45309;
+}
+
+/* Secure Client-Side Badge */
+.nav-brand-tag.tag-secure {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 45%, #bfdbfe 100%);
+    color: #1e40af;
+    border: 1.5px solid #3b82f6;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.nav-brand-tag.tag-secure i {
+    color: #2563eb;
+}
+
+/* Ration Preview Badge */
+.nav-brand-tag.tag-template {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    color: #78350f;
+    border: 1.5px solid #fcd34d;
+    box-shadow: 0 2px 6px rgba(217, 119, 6, 0.16);
+}
+
+/* ========================================================================= */
 /* Form Controls & Grids                                                     */
 /* ========================================================================= */
 .form-grid {

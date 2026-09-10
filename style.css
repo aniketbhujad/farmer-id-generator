@@ -41,6 +41,13 @@
     padding: 0;
 }
 
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-color: #f8fafc;
     color: var(--text-main);
@@ -1198,12 +1205,14 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
 }
 
-/* Responsive Navigation Bar for Tablet / Mobile */
+/* ========================================================================= */
+/* Comprehensive Responsive Styles for Tablet & Mobile (Phone Sizes)         */
+/* ========================================================================= */
 @media (max-width: 900px) {
     .navbar {
         flex-direction: column;
         gap: 12px;
-        padding: 1rem;
+        padding: 1rem 1.25rem;
         position: static;
     }
 
@@ -1221,13 +1230,406 @@ h1, h2, h3, h4, h5, h6 {
     .nav-tab-btn {
         flex: 1;
         justify-content: center;
-        padding: 8px 10px;
-        font-size: 0.85rem;
+        padding: 8px 12px;
+        font-size: 0.88rem;
     }
 
     .nav-controls {
         flex-wrap: wrap;
         width: 100%;
         justify-content: center;
+        gap: 8px;
+    }
+
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .container {
+        margin: 0.75rem auto;
+        padding: 0 0.75rem;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .navbar {
+        padding: 0.75rem;
+        gap: 10px;
+    }
+
+    .nav-brand {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .nav-brand-logo {
+        width: 34px;
+        height: 34px;
+    }
+
+    .brand-title-main {
+        font-size: 1rem;
+    }
+
+    .brand-title-sub {
+        font-size: 0.7rem;
+    }
+
+    .nav-tabs-wrapper {
+        gap: 4px;
+        padding: 3px;
+    }
+
+    .nav-tab-btn {
+        padding: 7px 6px;
+        font-size: 0.78rem;
+        gap: 4px;
+    }
+
+    .nav-controls {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .btn-translit-toggle,
+    .select-control,
+    .btn-nav-back {
+        width: 100%;
+        justify-content: center;
+        font-size: 0.82rem;
+        padding: 8px 10px;
+        box-sizing: border-box;
+    }
+
+    .translit-bar {
+        padding: 8px 1rem;
+        font-size: 0.78rem;
+    }
+
+    .translit-bar-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .panel {
+        border-radius: var(--radius-md);
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 1rem;
+        box-sizing: border-box;
+    }
+
+    .panel-title {
+        font-size: 1.05rem;
+        word-break: break-word;
+        line-height: 1.35;
+    }
+
+    .panel-body {
+        padding: 1rem 0.85rem;
+        box-sizing: border-box;
+    }
+
+    .nav-brand-tag {
+        font-size: 0.7rem;
+        padding: 4px 10px;
+        white-space: normal;
+        text-align: center;
+        align-self: flex-start;
+        max-width: 100%;
+        word-break: break-word;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 0.9rem;
+    }
+
+    .form-group.full-width {
+        grid-column: span 1;
+    }
+
+    .form-control {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+        box-sizing: border-box;
+    }
+
+    .file-upload-wrapper {
+        padding: 6px 8px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .file-upload-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+        margin-right: 8px;
+        flex-shrink: 0;
+    }
+
+    .file-upload-name {
+        max-width: 160px;
+        font-size: 0.8rem;
+    }
+
+    .ration-template-selector-box {
+        padding: 1rem 0.85rem;
+        box-sizing: border-box;
+    }
+
+    .template-pills-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .template-card-pill {
+        padding: 8px 10px;
+        box-sizing: border-box;
+    }
+
+    .land-details-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        box-sizing: border-box;
+    }
+
+    .land-details-header > div {
+        width: 100%;
+    }
+
+    .land-details-title {
+        font-size: 0.92rem;
+        word-break: break-word;
+    }
+
+    .btn-add-row {
+        width: 100%;
+        justify-content: center;
+        padding: 9px 12px;
+        box-sizing: border-box;
+    }
+
+    .table-wrapper {
+        margin-bottom: 1rem;
+        max-width: 100%;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        box-sizing: border-box;
+    }
+
+    .land-table {
+        min-width: 580px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        padding-top: 1.25rem;
+        box-sizing: border-box;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+        padding: 11px 16px;
+        font-size: 0.9rem;
+        box-sizing: border-box;
+    }
+
+    .action-controls {
+        flex-direction: column;
+        width: 100%;
+        padding: 1rem;
+        gap: 10px;
+        box-sizing: border-box;
+    }
+
+    .action-controls .btn {
+        width: 100%;
+        padding: 11px 16px;
+        font-size: 0.9rem;
+        box-sizing: border-box;
+    }
+
+    .preview-container {
+        padding: 0.75rem 0.5rem;
+        min-height: 250px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .card-preview-wrapper {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .card-preview-canvas {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        display: block;
+    }
+
+    .no-preview {
+        padding: 2rem 1rem;
+    }
+
+    .no-preview i {
+        font-size: 2.5rem;
+    }
+
+    .no-preview p {
+        font-size: 0.9rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .app-footer {
+        padding: 1.25rem 1rem;
+        margin-top: 2rem;
+        font-size: 0.8rem;
+        word-break: break-word;
+    }
+
+    /* Modal dialogs responsiveness on Phone */
+    .modal-overlay {
+        padding: 0.5rem;
+        box-sizing: border-box;
+    }
+
+    .modal-content {
+        max-width: 100% !important;
+        width: 100%;
+        max-height: 92vh;
+        border-radius: var(--radius-md);
+        box-sizing: border-box;
+    }
+
+    .modal-header {
+        padding: 1rem;
+        gap: 8px;
+        box-sizing: border-box;
+    }
+
+    .modal-header-title {
+        font-size: 1.1rem !important;
+        word-break: break-word;
+    }
+
+    .modal-body {
+        padding: 1rem;
+        max-height: 60vh;
+        box-sizing: border-box;
+    }
+
+    .warning-subtitle {
+        font-size: 1rem;
+    }
+
+    .modal-footer {
+        padding: 1rem;
+        gap: 10px;
+        box-sizing: border-box;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+        box-sizing: border-box;
+    }
+
+    .modal-actions .btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #cropContainer {
+        width: 280px !important;
+        height: 280px !important;
+        max-width: 100% !important;
+    }
+
+    #cropCanvas {
+        width: 280px !important;
+        height: 280px !important;
+        max-width: 100% !important;
+    }
+
+    #cropTargetFrame {
+        width: 144px !important;
+        height: 170px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 0.5rem;
+        margin: 0.5rem auto;
+    }
+
+    .panel-body {
+        padding: 0.85rem 0.65rem;
+    }
+
+    .nav-tabs-wrapper {
+        flex-direction: column;
+    }
+
+    .nav-tab-btn {
+        width: 100%;
+        font-size: 0.82rem;
+        justify-content: center;
+    }
+
+    .modal-content {
+        max-height: 95vh;
+    }
+
+    .modal-body {
+        padding: 0.75rem;
+        max-height: 55vh;
+    }
+
+    .modal-footer {
+        padding: 0.75rem;
+    }
+
+    #cropContainer {
+        width: 240px !important;
+        height: 240px !important;
+    }
+
+    #cropCanvas {
+        width: 240px !important;
+        height: 240px !important;
+    }
+
+    #cropTargetFrame {
+        width: 120px !important;
+        height: 142px !important;
     }
 }

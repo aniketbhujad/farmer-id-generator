@@ -658,11 +658,22 @@ pincodeInput.addEventListener('input', (e) => {
 });
 
 dobInput.addEventListener('input', (e) => {
-    let val = e.target.value.replace(/\D/g, '').substring(0, 8);
+    let raw = e.target.value.replace(/\D/g, '').substring(0, 8); // max 8 digits: DDMMYYYY
     let formatted = '';
-    if (val.length > 0) formatted += val.substring(0, 2);
-    if (val.length > 2) formatted += '/' + val.substring(2, 4);
-    if (val.length > 4) formatted += '/' + val.substring(4, 8);
+
+    if (raw.length > 4) {
+        formatted = raw.substring(0, 2) + '/' + raw.substring(2, 4) + '/' + raw.substring(4);
+    } else if (raw.length > 2) {
+        formatted = raw.substring(0, 2) + '/' + raw.substring(2);
+        if (raw.length === 4 && e.inputType !== 'deleteContentBackward') {
+            formatted += '/';
+        }
+    } else if (raw.length === 2 && e.inputType !== 'deleteContentBackward') {
+        formatted = raw + '/';
+    } else {
+        formatted = raw;
+    }
+
     e.target.value = formatted;
 });
 
@@ -1056,14 +1067,31 @@ rationIncome.addEventListener('input', (e) => {
     e.target.value = digits;
 });
 
-// Format Units: max 99
+// Format Units: allow typing any numeric value freely (only digits, no min limit)
 rationUnits.addEventListener('input', (e) => {
-    let val = parseInt(e.target.value, 10);
-    if (isNaN(val) || val < 1) {
-        e.target.value = 1;
-    } else if (val > 99) {
-        e.target.value = 99;
+    e.target.value = e.target.value.replace(/\D/g, '');
+    rationUnits.dataset.userEdited = 'true';
+});
+
+// Format Issue Date: auto-insert / after DD and MM, restrict to valid DD/MM/YYYY length
+rationIssueDate.addEventListener('input', (e) => {
+    let raw = e.target.value.replace(/\D/g, '').substring(0, 8); // max 8 digits: DDMMYYYY
+    let formatted = '';
+
+    if (raw.length > 4) {
+        formatted = raw.substring(0, 2) + '/' + raw.substring(2, 4) + '/' + raw.substring(4);
+    } else if (raw.length > 2) {
+        formatted = raw.substring(0, 2) + '/' + raw.substring(2);
+        if (raw.length === 4 && e.inputType !== 'deleteContentBackward') {
+            formatted += '/';
+        }
+    } else if (raw.length === 2 && e.inputType !== 'deleteContentBackward') {
+        formatted = raw + '/';
+    } else {
+        formatted = raw;
     }
+
+    e.target.value = formatted;
 });
 
 // Signature Upload Handler (keeps signature image as-is without background removal)
@@ -1092,6 +1120,7 @@ rationSignature.addEventListener('change', (e) => {
 const MAX_RATION_MEMBERS = 7;
 
 function initDefaultRationMembers() {
+    delete rationUnits.dataset.userEdited;
     rationMembersTableBody.innerHTML = '';
     rationIssueDate.value = getCurrentDateFormatted();
     addRationMemberRow('रमेश किसन पाटील', '38/M', 'SELF', 'XXXX-XXXX-6612');
@@ -1102,7 +1131,9 @@ function initDefaultRationMembers() {
 
 function updateRationUnitsCount() {
     const rowCount = rationMembersTableBody.querySelectorAll('tr').length;
-    rationUnits.value = Math.min(99, rowCount);
+    if (rationUnits.dataset.userEdited !== 'true') {
+        rationUnits.value = rowCount;
+    }
     if (rowCount >= MAX_RATION_MEMBERS) {
         btnAddRationMember.disabled = true;
         btnAddRationMember.style.opacity = '0.5';
@@ -1257,8 +1288,8 @@ function validateRationDetails() {
     const rawIncomeDigits = rationIncome.value.replace(/\D/g, '');
     checkField(rationIncome, rawIncomeDigits.length > 0 && rawIncomeDigits.length <= 9, "वार्षिक उत्पन्न 10 अंकांपेक्षा कमी असावे / Income must be less than 10 digits.");
 
-    const unitsVal = parseInt(rationUnits.value, 10);
-    checkField(rationUnits, !isNaN(unitsVal) && unitsVal >= 1 && unitsVal <= 99, "युनिट्स 1 ते 99 दरम्यान असावे / Units must be 1 to 99.");
+    const rawUnits = rationUnits.value.trim();
+    checkField(rationUnits, rawUnits.length > 0 && /^\d+$/.test(rawUnits), "एकूण युनिट्स संख्या आवश्यक / Units number required.");
 
     const issueVal = rationIssueDate.value.trim();
     checkField(rationIssueDate, issueVal.length === 10 && /^\d{2}\/\d{2}\/\d{4}$/.test(issueVal), "वाटप दिनांक DD/MM/YYYY असावा / Valid issue date required.");
@@ -1685,6 +1716,7 @@ btnUpdateRationCard.addEventListener('click', async () => {
 
 btnRationCancel.addEventListener('click', () => {
     rationForm.reset();
+    delete rationUnits.dataset.userEdited;
     rationFileNameDisplay.textContent = 'No photo chosen';
     rationSigFileNameDisplay.textContent = 'No signature file chosen';
     rationPhotoSrc = null;

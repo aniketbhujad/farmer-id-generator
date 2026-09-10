@@ -250,7 +250,7 @@
                                 <div class="form-group">
                                     <label class="form-label" for="dob">जन्म तारीख / DOB <span
                                             class="required">*</span></label>
-                                    <input type="text" id="dob" class="form-control" placeholder="DD/MM/YYYY" required>
+                                    <input type="text" id="dob" class="form-control" placeholder="DD/MM/YYYY" maxlength="10" required>
                                 </div>
 
                                 <!-- Gender -->
@@ -553,11 +553,8 @@
                                 <div class="form-group">
                                     <label class="form-label" for="rationUnits">
                                         एकूण युनिट्स / No. of Units (सदस्य) <span class="required">*</span>
-                                        <span style="font-size:0.75rem; color:var(--text-muted);">(कमाल 99 / Max
-                                            99)</span>
                                     </label>
-                                    <input type="number" id="rationUnits" class="form-control" min="1" max="99"
-                                        value="4" required>
+                                    <input type="text" id="rationUnits" class="form-control" inputmode="numeric" placeholder="उदा. 4" maxlength="6" required>
                                 </div>
 
                                 <!-- Family Total Income -->
@@ -568,7 +565,7 @@
                                             अंक)</span>
                                     </label>
                                     <input type="text" id="rationIncome" class="form-control" placeholder="उदा. 45000"
-                                        maxlength="12" required>
+                                        maxlength="9" required>
                                 </div>
 
                                 <!-- Issue Date -->

@@ -354,8 +354,8 @@
         return phoneticTransliterateWord(word);
     }
 
-    // State management
-    let isTransliterationEnabled = true;
+    // State management: English by default
+    let isTransliterationEnabled = false;
 
     /**
      * Attaches transliteration handlers to an input element
